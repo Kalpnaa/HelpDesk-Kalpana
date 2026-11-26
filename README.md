@@ -225,3 +225,51 @@ This generates two files:
 - `api.service.spec.ts` - The generated test file for the service.
 
 The API service will handle HTTP requests from Angular to our ASP.NET Core Web API.
+
+
+genral flow:- create in models -> update in applicationdbcontect ( configure - make method name modelcraeting to add contriants)
+apply migration to sql server - dotnet ef database update
+migration creating dotnet ef migrations add InitialAuthentication
+Module 1. authication
+
+1- sign in api
+Created the User entity.
+
+
+
+Added Users to ApplicationDbContext.
+
+
+
+Configured primary key and required fields.
+
+
+
+Enforced unique email addresses.
+
+
+
+Generated InitialAuthentication migration.
+
+
+
+Applied the migration to SQL Server.
+
+
+
+Verified the Users table in SSMS.
+
+
+craete the registartion dtos
+
+models->interface->services ->program.cs(register) -> contollers
+
+2.login in api
+
+3.add jwt configuration
+ - in appseettings.json
+
+ 4. frotend
+ model(create interface) ->app/services -> component -> add route in app.rout.ts -> integrate in app.ts
+
+ ng generate guard guards/auth --functional

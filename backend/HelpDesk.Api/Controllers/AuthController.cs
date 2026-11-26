@@ -1,6 +1,8 @@
 using HelpDesk.Api.DTOs;
 using HelpDesk.Api.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HelpDesk.Api.Controllers;
 
@@ -37,7 +39,7 @@ public class AuthController : ControllerBase
     {
         var result = await _authService.LoginAsync(loginDto);
 
-        if(result == null)
+        if (result == null)
         {
             return Unauthorized(new
             {
@@ -46,5 +48,18 @@ public class AuthController : ControllerBase
         }
 
         return Ok(result);
+    }
+
+    [Authorize]
+    [HttpGet("me")]
+    public IActionResult GetCurrentUser()
+    {
+        return Ok(new
+        {
+            id = User.FindFirstValue(ClaimTypes.NameIdentifier),
+            fullName = User.Identity?.Name,
+            email = User.FindFirstValue(ClaimTypes.Email),
+            role = User.FindFirstValue(ClaimTypes.Role)
+        });
     }
 }
