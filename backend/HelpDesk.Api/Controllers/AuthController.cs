@@ -30,4 +30,21 @@ public class AuthController : ControllerBase
 
         return StatusCode(StatusCodes.Status201Created, result);
     }
+
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginDto loginDto)
+    {
+        var result = await _authService.LoginAsync(loginDto);
+
+        if(result == null)
+        {
+            return Unauthorized(new
+            {
+                message = "either email is wrong or password."
+            });
+        }
+
+        return Ok(result);
+    }
 }
