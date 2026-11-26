@@ -2,12 +2,15 @@ using System.Runtime.CompilerServices;
 using HelpDesk.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-
+using HelpDesk.Api.Interfaces;
+using HelpDesk.Api.Models;
+using HelpDesk.Api.Services;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-//allow angular to connect
+//services register section
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngular", policy =>
@@ -18,16 +21,20 @@ builder.Services.AddCors(options =>
     });
 });
 
+
 //connection to db
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddScoped<IAuthService, AuthService>();
 
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 // Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+
 
 var app = builder.Build();
 
@@ -44,17 +51,8 @@ using (var scope = app.Services.CreateScope())
 }
 
 
-app.MapGet("/api/health",()=>
-{
-    return Results.Ok(
-        new
-        {
-            message = "helpdesk api working",
-            status = "okay"
-            
-        }
-    );
-});
+
+app.MapControllers(); 
 
 
 app.Run();
