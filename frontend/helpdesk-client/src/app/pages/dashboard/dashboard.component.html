@@ -1,0 +1,11 @@
+<div class="dashboard">
+  <h1>Welcome to HelpDesk!</h1>
+
+  <div *ngIf="profile">
+    <h2>Hello, {{ profile.fullName }}!</h2>
+    <p>Email: {{ profile.email }}</p>
+    <p>Role: {{ profile.role }}</p>
+  </div>
+
+  <button (click)="logout()">Logout</button>
+</div>

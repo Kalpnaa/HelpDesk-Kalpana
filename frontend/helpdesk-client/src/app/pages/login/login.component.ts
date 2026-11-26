@@ -8,6 +8,7 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -26,7 +27,8 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+      private router: Router
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -48,6 +50,7 @@ export class LoginComponent {
       next: (response) => {
         this.successMessage = `Welcome back, ${response.fullname}!`;
         this.isLoading = false;
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         this.errorMessage =
