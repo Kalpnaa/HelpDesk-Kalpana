@@ -31,3 +31,10 @@ export interface UserProfile {
   email: string;
   role: string;
 }
+
+export interface UserData {
+  id: number;
+  fullName: string;
+  email: string;
+  role: string;
+}
