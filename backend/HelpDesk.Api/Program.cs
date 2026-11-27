@@ -10,7 +10,6 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 var jwtKey = builder.Configuration["Jwt:Key"]
@@ -66,13 +65,14 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<JwtService>();
-
+builder.Services.AddScoped<IUserService, UserService>();
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 
 var app = builder.Build();
+await DbSeeder.SeedInitialAdminAsync(app.Services);
 
 app.UseCors("AllowAngular");
 
