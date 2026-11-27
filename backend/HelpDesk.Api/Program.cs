@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using HelpDesk.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -69,9 +70,13 @@ builder.Services.AddScoped<IUserService, UserService>();
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 
 var app = builder.Build();
+
+app.UseMiddleware<GlobalExceptionMiddleware>();
 await DbSeeder.SeedInitialAdminAsync(app.Services);
 
 app.UseCors("AllowAngular");
@@ -91,6 +96,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 
 app.Run();

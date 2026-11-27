@@ -245,3 +245,7 @@ DTOs → Interfaces → Controllers → Service Registration (if required)
 7. Test authorization
 Tested the authorization APIs using Postman to verify that access is
 controlled according to user roles.
+
+
+feature - global error handling
+dotnet add package Swashbuckle.AspNetCore --version 10.0.0
