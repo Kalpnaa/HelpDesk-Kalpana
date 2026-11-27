@@ -5,7 +5,7 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
-  ReactiveFormsModule
+  ReactiveFormsModule,
 } from '@angular/forms';
 
 import { Router } from '@angular/router';
@@ -14,12 +14,11 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-
   loginForm: FormGroup;
   successMessage = '';
   errorMessage = '';
@@ -28,11 +27,11 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-      private router: Router
+    private router: Router,
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
+      password: ['', [Validators.required]],
     });
   }
 
@@ -50,13 +49,22 @@ export class LoginComponent {
       next: (response) => {
         this.successMessage = `Welcome back, ${response.fullname}!`;
         this.isLoading = false;
-        this.router.navigate(['/dashboard']);
+        const roleRoutes: { [key: string]: string } = {
+          Customer: '/customer-dashboard',
+          Agent: '/agent-dashboard',
+          Manager: '/manager-dashboard',
+          Admin: '/admin-dashboard',
+        };
+        console.log(response.role);
+        console.log(roleRoutes[response.role]);
+        this.router.navigate([roleRoutes[response.role|| '/unauthorized']]);
       },
       error: (error) => {
         this.errorMessage =
-          error.error?.message || 'Login failed. Please check your credentials.';
+          error.error?.message ||
+          'Login failed. Please check your credentials.';
         this.isLoading = false;
-      }
+      },
     });
   }
 }
