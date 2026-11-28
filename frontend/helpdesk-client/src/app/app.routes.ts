@@ -5,6 +5,8 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { authGuard } from './guards/auth.guard';
 import { roleGuard } from './guards/role.guard';
 import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
+import { CreateTicketComponent } from './pages/tickets/create-ticket/create-ticket.component';
+import { MyTicketsComponent } from './pages/tickets/my-tickets/my-tickets.component';
 
 export const routes: Routes = [
   {
@@ -32,6 +34,16 @@ export const routes: Routes = [
   canActivate: [authGuard, roleGuard(['Customer'])]
 },
 {
+  path: 'customer/create-ticket',
+  component: CreateTicketComponent,
+  canActivate: [authGuard, roleGuard(['Customer'])]
+},
+{
+  path: 'customer/my-tickets',
+  component: MyTicketsComponent,
+  canActivate: [authGuard, roleGuard(['Customer'])]
+},
+{
   path: 'agent-dashboard',
   component: DashboardComponent,
   canActivate: [authGuard, roleGuard(['Agent'])]
@@ -50,6 +62,7 @@ export const routes: Routes = [
   path: 'unauthorized',
   component: UnauthorizedComponent
 },
+
  {
     path: '**',
     redirectTo: 'login',

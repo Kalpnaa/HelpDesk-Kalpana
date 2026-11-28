@@ -1,0 +1,106 @@
+<p>create-ticket works!</p>
+
+<div class="ticket-container">
+
+  <div class="ticket-header">
+    <h2>Create Support Ticket</h2>
+    <p>Describe your issue and our support team will help you.</p>
+  </div>
+
+  <div *ngIf="successMessage" class="success-message">
+    {{ successMessage }}
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="loading" class="loading-message">
+    Loading categories...
+  </div>
+
+  <form
+    *ngIf="!loading"
+    [formGroup]="ticketForm"
+    (ngSubmit)="onSubmit()"
+    class="ticket-form"
+  >
+
+    <!-- Title -->
+    <div class="form-group">
+      <label for="title">Ticket Title</label>
+
+      <input
+        id="title"
+        type="text"
+        formControlName="title"
+        placeholder="Enter a short title"
+      />
+
+      <small *ngIf="ticketForm.get('title')?.touched && ticketForm.get('title')?.hasError('required')">
+        Title is required.
+      </small>
+
+      <small *ngIf="ticketForm.get('title')?.hasError('minlength')">
+        Title must contain at least 5 characters.
+      </small>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label for="description">Description</label>
+
+      <textarea
+        id="description"
+        rows="5"
+        formControlName="description"
+        placeholder="Describe your issue in detail"
+      ></textarea>
+
+      <small *ngIf="ticketForm.get('description')?.touched && ticketForm.get('description')?.hasError('required')">
+        Description is required.
+      </small>
+
+      <small *ngIf="ticketForm.get('description')?.hasError('minlength')">
+        Description must contain at least 10 characters.
+      </small>
+    </div>
+
+    <!-- Category -->
+    <div class="form-group">
+      <label for="category">Category</label>
+
+      <select id="category" formControlName="categoryId">
+        <option value="">Select a category</option>
+
+        <option *ngFor="let category of categories" [value]="category.id">
+          {{ category.name }}
+        </option>
+      </select>
+
+      <small *ngIf="ticketForm.get('categoryId')?.touched && ticketForm.get('categoryId')?.invalid">
+        Please select a category.
+      </small>
+    </div>
+
+    <!-- Priority -->
+    <div class="form-group">
+      <label for="priority">Priority</label>
+
+      <select id="priority" formControlName="priority">
+        <option *ngFor="let priority of priorities" [value]="priority">
+          {{ priority }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Submit -->
+    <button
+      type="submit"
+      [disabled]="submitting || loading"
+    >
+      {{ submitting ? 'Creating Ticket...' : 'Submit Ticket' }}
+    </button>
+
+  </form>
+</div>
