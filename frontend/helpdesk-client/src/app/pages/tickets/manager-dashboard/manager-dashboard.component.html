@@ -1,0 +1,96 @@
+<div class="manager-container">
+
+  <div class="page-header">
+    <div>
+      <h1>Manager Dashboard</h1>
+      <p>View and assign support tickets to agents.</p>
+    </div>
+
+    <button (click)="loadAllTickets()">Refresh Tickets</button>
+  </div>
+
+  <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+  <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+  <div *ngIf="loading" class="message">
+    Loading tickets...
+  </div>
+
+  <div *ngIf="!loading && tickets.length === 0" class="message">
+    No tickets available.
+  </div>
+
+  <div class="table-container" *ngIf="!loading && tickets.length > 0">
+
+    <table>
+      <thead>
+        <tr>
+          <th>Ticket No.</th>
+          <th>Title</th>
+          <th>Customer</th>
+          <th>Category</th>
+          <th>Priority</th>
+          <th>Status</th>
+          <th>Assigned Agent</th>
+          <th>Assign Agent</th>
+          <th>Created Date</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let ticket of tickets">
+
+          <td>{{ ticket.ticketNumber }}</td>
+          <td>{{ ticket.title }}</td>
+          <td>{{ ticket.createdByName }}</td>
+          <td>{{ ticket.categoryName }}</td>
+
+          <td>
+            <span class="priority" [ngClass]="ticket.priority.toLowerCase()">
+              {{ ticket.priority }}
+            </span>
+          </td>
+
+          <td>{{ ticket.status }}</td>
+
+          <td>
+            {{ ticket.assignedToName || 'Not Assigned' }}
+          </td>
+
+          <td>
+            <div class="assign-controls">
+              <select
+                [(ngModel)]="selectedAgents[ticket.id]"
+                [disabled]="assigningTicketId === ticket.id">
+
+                <option [ngValue]="null">Select Agent</option>
+
+                <option *ngFor="let agent of agents" [ngValue]="agent.id">
+                  {{ agent.fullName }}
+                </option>
+
+              </select>
+
+              <button
+                (click)="assignTicket(ticket)"
+                [disabled]="assigningTicketId === ticket.id || !selectedAgents[ticket.id]">
+
+                {{ assigningTicketId === ticket.id ? 'Assigning...' : 'Assign' }}
+
+              </button>
+            </div>
+          </td>
+
+          <td>{{ ticket.createdAt | date:'medium' }}</td>
+
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <div class="total">
+    Total Tickets: {{ tickets.length }}
+  </div>
+
+</div>

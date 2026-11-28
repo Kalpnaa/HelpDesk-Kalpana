@@ -1,0 +1,152 @@
+
+.tickets-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.page-header {
+  margin-bottom: 25px;
+
+  h2 {
+    color: #1f2937;
+    margin-bottom: 8px;
+  }
+
+  p {
+    color: #6b7280;
+    margin: 0;
+  }
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+
+  th,
+  td {
+    padding: 14px;
+    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
+  }
+
+  th {
+    background: #f3f4f6;
+    color: #374151;
+    font-weight: 600;
+  }
+
+  td {
+    color: #4b5563;
+  }
+
+  tbody tr:hover {
+    background: #f9fafb;
+  }
+}
+
+.priority,
+.status {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.priority {
+  &.low {
+    background: #dcfce7;
+    color: #166534;
+  }
+
+  &.medium {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  &.high {
+    background: #ffedd5;
+    color: #9a3412;
+  }
+
+  &.critical {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+}
+
+.status {
+  &.new {
+    background: #dbeafe;
+    color: #1e40af;
+  }
+
+  &.open {
+    background: #e0e7ff;
+    color: #3730a3;
+  }
+
+  &.pending {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  &.resolved {
+    background: #dcfce7;
+    color: #166534;
+  }
+
+  &.closed {
+    background: #e5e7eb;
+    color: #374151;
+  }
+}
+
+select {
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  margin-right: 8px;
+}
+
+button {
+  padding: 8px 14px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background: #1d4ed8;
+  }
+
+  &:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+  }
+}
+
+.message,
+.empty-message {
+  padding: 20px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.error-message {
+  padding: 12px;
+  margin-bottom: 15px;
+  background: #fee2e2;
+  color: #991b1b;
+  border-radius: 6px;
+}

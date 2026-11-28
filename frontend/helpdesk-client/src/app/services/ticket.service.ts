@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -6,14 +5,13 @@ import { Observable } from 'rxjs';
 import {
   Category,
   CreateTicketRequest,
-  TicketResponse
+  TicketResponse,
 } from '../models/ticket.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TicketService {
-
   private apiUrl = 'http://localhost:5029/api';
 
   constructor(private http: HttpClient) {}
@@ -25,30 +23,43 @@ export class TicketService {
 
   // Customer creates a ticket
   createTicket(data: CreateTicketRequest): Observable<TicketResponse> {
-    return this.http.post<TicketResponse>(
-      `${this.apiUrl}/Tickets`,
-      data
-    );
+    return this.http.post<TicketResponse>(`${this.apiUrl}/Tickets`, data);
   }
 
   // Customer gets their own tickets
   getMyTickets(): Observable<TicketResponse[]> {
-    return this.http.get<TicketResponse[]>(
-      `${this.apiUrl}/Tickets/my-tickets`
-    );
+    return this.http.get<TicketResponse[]>(`${this.apiUrl}/Tickets/my-tickets`);
   }
 
   // Agent gets assigned tickets
   getAssignedTickets(): Observable<TicketResponse[]> {
-    return this.http.get<TicketResponse[]>(
-      `${this.apiUrl}/Tickets/assigned`
-    );
+    return this.http.get<TicketResponse[]>(`${this.apiUrl}/Tickets/assigned`);
   }
 
   // Manager/Admin gets all tickets
   getAllTickets(): Observable<TicketResponse[]> {
-    return this.http.get<TicketResponse[]>(
-      `${this.apiUrl}/Tickets`
+    return this.http.get<TicketResponse[]>(`${this.apiUrl}/Tickets`);
+  }
+
+  // Agent updates ticket status
+  updateTicketStatus(
+    ticketId: number,
+    status: 'New' | 'Open' | 'Pending' | 'Resolved' | 'Closed',
+  ): Observable<TicketResponse> {
+    return this.http.put<TicketResponse>(
+      `${this.apiUrl}/Tickets/${ticketId}/status`,
+      { status },
     );
   }
+
+  getAgents() {
+  return this.http.get<any[]>(`${this.apiUrl}/User/agents`);
+}
+
+assignTicket(ticketId: number, assignedToId: number) {
+  return this.http.put(
+    `${this.apiUrl}/Tickets/${ticketId}/assign`,
+    { assignedToId }
+  );
+}
 }
