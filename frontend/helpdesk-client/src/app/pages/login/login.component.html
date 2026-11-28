@@ -1,64 +1,121 @@
-<div class="login-container">
-  <div class="login-card">
 
-    <h2>Welcome Back</h2>
-    <p class="subtitle">Sign in to your HelpDesk account</p>
-
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input
-          id="email"
-          type="email"
-          formControlName="email"
-          placeholder="Enter your email"
-        />
-
-        <small *ngIf="loginForm.get('email')?.touched &&
-                      loginForm.get('email')?.hasError('required')">
-          Email is required.
-        </small>
-
-        <small *ngIf="loginForm.get('email')?.touched &&
-                      loginForm.get('email')?.hasError('email')">
-          Enter a valid email address.
-        </small>
-      </div>
-
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          formControlName="password"
-          placeholder="Enter your password"
-        />
-
-        <small *ngIf="loginForm.get('password')?.touched &&
-                      loginForm.get('password')?.hasError('required')">
-          Password is required.
-        </small>
-      </div>
-
-      <button type="submit" [disabled]="isLoading">
-        {{ isLoading ? 'Signing In...' : 'Sign In' }}
-      </button>
-
-    </form>
-
-    <p class="success-message" *ngIf="successMessage">
-      {{ successMessage }}
-    </p>
-
-    <p class="error-message" *ngIf="errorMessage">
-      {{ errorMessage }}
-    </p>
-
-    <p class="register-link">
-      Don't have an account?
-      <a routerLink="/register">Sign Up</a>
-    </p>
-
+<div class="auth-page">
+  <div class="auth-brand">
+    <a routerLink="/" class="brand">
+      <span class="brand-icon">H</span>
+      <span>HelpDesk</span>
+    </a>
+    <span class="brand-caption">Support made simpler.</span>
   </div>
+
+  <main class="auth-container">
+    <section class="auth-visual">
+      <div class="visual-content">
+        <span class="visual-label">YOUR SUPPORT SPACE</span>
+
+        <h1>Every issue deserves a solution.</h1>
+
+        <p>
+          Manage support requests, connect with your support team
+          and keep everything moving in one place.
+        </p>
+
+        <div class="visual-card">
+          <div class="visual-card-top">
+            <span class="ticket-icon">✓</span>
+            <span class="resolved-label">Ticket resolved</span>
+          </div>
+          <h3>Your requests, under control.</h3>
+          <div class="progress-track">
+            <div class="progress-value"></div>
+          </div>
+          <span class="visual-card-footer">Simple. Organized. Reliable.</span>
+        </div>
+      </div>
+      <div class="visual-decoration decoration-one"></div>
+      <div class="visual-decoration decoration-two"></div>
+    </section>
+
+    <section class="auth-form-section">
+      <div class="form-card">
+        <div class="mobile-brand">HelpDesk</div>
+
+        <span class="eyebrow">WELCOME BACK</span>
+        <h2>Sign in to your account</h2>
+        <p class="form-description">
+          Enter your details to continue to HelpDesk.
+        </p>
+
+        <div class="error-message" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+            />
+
+            <small *ngIf="loginForm.get('email')?.touched &&
+              loginForm.get('email')?.hasError('required')">
+              Email is required.
+            </small>
+            <small *ngIf="loginForm.get('email')?.touched &&
+              loginForm.get('email')?.hasError('email')">
+              Enter a valid email address.
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+
+            <div class="password-wrapper">
+              <input
+                id="password"
+                [type]="showPassword ? 'text' : 'password'"
+                formControlName="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+              />
+              <button
+                type="button"
+                class="password-toggle"
+                (click)="showPassword = !showPassword"
+              >
+                {{ showPassword ? 'Hide' : 'Show' }}
+              </button>
+            </div>
+
+            <small *ngIf="loginForm.get('password')?.touched &&
+              loginForm.get('password')?.hasError('required')">
+              Password is required.
+            </small>
+          </div>
+
+          <button
+            type="submit"
+            class="submit-button"
+            [disabled]="isLoading"
+          >
+            {{ isLoading ? 'Signing in...' : 'Sign In' }}
+            <span *ngIf="!isLoading">→</span>
+          </button>
+        </form>
+
+        <p class="switch-auth">
+          Don't have an account?
+          <a routerLink="/register">Create an account</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="auth-footer">
+    © 2026 HelpDesk. All rights reserved.
+  </footer>
 </div>

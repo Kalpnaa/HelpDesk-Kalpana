@@ -1,1 +1,262 @@
-/* You can add global styles to this file, and also import other style files */
+
+/* Google Font - Lato */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;500;600;700;800&display=swap');
+
+/* =====================================
+   HELPDESK - GLOBAL THEME
+===================================== */
+
+:root {
+  /* Main theme */
+  --color-plum: #514268;
+  --color-plum-dark: #403352;
+  --color-lavender: #E9E1F5;
+  --color-lavender-light: #F2EDF8;
+  --color-cream: #F8F5EF;
+  --color-white: #FFFFFF;
+
+  /* Text */
+  --color-text: #302B38;
+  --color-muted: #77717F;
+
+  /* Borders and shadows */
+  --color-border: #E8E2EC;
+  --shadow-card: 0 3px 15px rgba(81, 66, 104, 0.07);
+
+  /* Priority colours */
+  --priority-low-bg: #E0F2E9;
+  --priority-low-text: #176B45;
+
+  --priority-medium-bg: #FFF1CC;
+  --priority-medium-text: #885A00;
+
+  --priority-high-bg: #FCE4D6;
+  --priority-high-text: #A34216;
+
+  --priority-critical-bg: #F9DDE2;
+  --priority-critical-text: #A61E36;
+
+  /* Ticket status colours */
+  --status-new-bg: #E8E0F7;
+  --status-new-text: #62449A;
+
+  --status-open-bg: #DCEBFA;
+  --status-open-text: #205B96;
+
+  --status-pending-bg: #FFF0D5;
+  --status-pending-text: #91600B;
+
+  --status-resolved-bg: #DDF1E5;
+  --status-resolved-text: #216B45;
+
+  --status-closed-bg: #E8E8EB;
+  --status-closed-text: #555560;
+}
+
+/* =====================================
+   GLOBAL RESET
+===================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  background-color: var(--color-cream);
+  color: var(--color-text);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* =====================================
+   HEADINGS
+===================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-plum);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+p {
+  color: var(--color-muted);
+}
+
+/* =====================================
+   BUTTONS
+===================================== */
+
+button {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--color-plum);
+  color: var(--color-white);
+  border: none;
+  padding: 11px 22px;
+  border-radius: 7px;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-plum-dark);
+}
+
+.btn-secondary {
+  background: var(--color-lavender);
+  color: var(--color-plum);
+  border: 1px solid var(--color-border);
+  padding: 11px 22px;
+  border-radius: 7px;
+}
+
+/* =====================================
+   CARDS
+===================================== */
+
+.card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: var(--shadow-card);
+}
+
+/* =====================================
+   FORM ELEMENTS
+===================================== */
+
+input, select, textarea {
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--color-plum);
+  box-shadow: 0 0 0 3px rgba(81, 66, 104, 0.10);
+}
+
+/* =====================================
+   PRIORITY BADGES
+===================================== */
+
+.priority {
+  display: inline-block;
+  padding: 4px 11px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.priority.low {
+  background: var(--priority-low-bg);
+  color: var(--priority-low-text);
+}
+
+.priority.medium {
+  background: var(--priority-medium-bg);
+  color: var(--priority-medium-text);
+}
+
+.priority.high {
+  background: var(--priority-high-bg);
+  color: var(--priority-high-text);
+}
+
+.priority.critical {
+  background: var(--priority-critical-bg);
+  color: var(--priority-critical-text);
+}
+
+/* =====================================
+   STATUS BADGES
+===================================== */
+
+.status {
+  display: inline-block;
+  padding: 4px 11px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.status.new {
+  background: var(--status-new-bg);
+  color: var(--status-new-text);
+}
+
+.status.open {
+  background: var(--status-open-bg);
+  color: var(--status-open-text);
+}
+
+.status.pending {
+  background: var(--status-pending-bg);
+  color: var(--status-pending-text);
+}
+
+.status.resolved {
+  background: var(--status-resolved-bg);
+  color: var(--status-resolved-text);
+}
+
+.status.closed {
+  background: var(--status-closed-bg);
+  color: var(--status-closed-text);
+}
+
+/* =====================================
+   TABLES
+===================================== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: var(--color-lavender-light);
+  color: var(--color-plum);
+  font-weight: 700;
+  text-align: left;
+}
+
+th, td {
+  padding: 13px 15px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+tbody tr:hover {
+  background: var(--color-lavender-light);
+}
+
+/* =====================================
+   LINKS
+===================================== */
+
+a {
+  color: var(--color-plum);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-plum-dark);
+}

@@ -1,31 +1,33 @@
+
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
-  Validators,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  Validators
 } from '@angular/forms';
-
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
-
   registerForm: FormGroup;
-  successMessage = '';
-  errorMessage = '';
   isLoading = false;
+  showPassword = false;
+  errorMessage = '';
+  successMessage = '';
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     this.registerForm = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(2)]],
@@ -41,19 +43,33 @@ export class RegisterComponent {
     }
 
     this.isLoading = true;
-    this.successMessage = '';
     this.errorMessage = '';
+    this.successMessage = '';
 
-    this.authService.register(this.registerForm.value).subscribe({
-      next: (response) => {
-        this.successMessage = `Welcome, ${response.email}! Your account has been created.`;
-        this.registerForm.reset();
+    const formValue = this.registerForm.value;
+
+    this.authService.register({
+      fullname: formValue.fullName,
+      email: formValue.email,
+      password: formValue.password
+    }).subscribe({
+      next: () => {
         this.isLoading = false;
+        this.successMessage =
+          'Your account has been created successfully! Redirecting to login...';
+
+        this.registerForm.reset();
+
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 1500);
       },
       error: (error) => {
-        this.errorMessage =
-          error.error?.message || 'Registration failed. Please try again.';
         this.isLoading = false;
+        this.errorMessage =
+          error.error?.message ||
+          error.error?.title ||
+          'Unable to create your account. Please try again.';
       }
     });
   }

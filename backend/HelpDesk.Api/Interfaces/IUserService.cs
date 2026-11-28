@@ -7,4 +7,5 @@ public interface IUserService
     Task<RegisterResponseDto?> CreateUserAsync(CreateUserDto dto);
 
     Task<List<AgentResponseDto>> GetAgentsAsync();
+    Task<List<UserResponseDto>> GetAllUsersAsync();
 }

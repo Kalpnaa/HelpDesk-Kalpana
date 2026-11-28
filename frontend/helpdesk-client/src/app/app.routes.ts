@@ -8,9 +8,14 @@ import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.compone
 import { CreateTicketComponent } from './pages/tickets/create-ticket/create-ticket.component';
 import { MyTicketsComponent } from './pages/tickets/my-tickets/my-tickets.component';
 import { AssignedTicketsComponent } from './pages/tickets/assigned-tickets/assigned-tickets.component';
-import { ManagerDashboardComponent } from './pages/tickets/manager-dashboard/manager-dashboard.component';
-
-
+import { LandingComponent } from './pages/landing/landing.component';
+import { CustomerDashboardComponent } from './pages/customer/customer-dashboard/customer-dashboard.component';
+import { AgentDashboardComponent } from './pages/agent/agent-dashboard/agent-dashboard.component';
+import { ManagerDashboardComponent as ManagerTicketsComponent} from './pages/tickets/manager-dashboard/manager-dashboard.component';
+import {  ManagerDashboardComponent} from './pages/manager/manager-dashboard/manager-dashboard.component';
+import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard.component';
+import { AdminUsersComponent } from './pages/admin/admin-users/admin-users.component';
+import { CreateUserComponent } from './pages/admin/create-user/create-user.component';
 export const routes: Routes = [
   {
     path: 'register',
@@ -26,14 +31,13 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
-  },
+  path: '',
+  component: LandingComponent
+},
  
   {
   path: 'customer-dashboard',
-  component: DashboardComponent,
+  component: CustomerDashboardComponent,
   canActivate: [authGuard, roleGuard(['Customer'])]
 },
 {
@@ -48,7 +52,7 @@ export const routes: Routes = [
 },
 {
   path: 'agent-dashboard',
-  component: DashboardComponent,
+  component: AgentDashboardComponent,
   canActivate: [authGuard, roleGuard(['Agent'])]
 },
 {
@@ -58,18 +62,30 @@ export const routes: Routes = [
 },
 {
   path: 'manager-dashboard',
-  component: DashboardComponent,
+  component: ManagerDashboardComponent,
   canActivate: [authGuard, roleGuard(['Manager'])]
 },
 {
   path: 'manager/tickets',
-  component: ManagerDashboardComponent,
+  component: ManagerTicketsComponent,
   canActivate: [authGuard, roleGuard(['Manager', 'Admin'])]
 },
 {
   path: 'admin-dashboard',
-  component: DashboardComponent,
+  component: AdminDashboardComponent,
   canActivate: [authGuard, roleGuard(['Admin'])]
+},
+{
+  path: 'admin/users',
+  component: AdminUsersComponent,
+  canActivate: [authGuard, roleGuard],
+  data: { roles: ['Admin'] }
+},
+{
+  path: 'admin/create-user',
+  component: CreateUserComponent,
+  canActivate: [authGuard, roleGuard],
+  data: { roles: ['Admin'] }
 },
 {
   path: 'unauthorized',
@@ -78,6 +94,6 @@ export const routes: Routes = [
 
  {
     path: '**',
-    redirectTo: 'login',
+    redirectTo: '',
   },
 ];

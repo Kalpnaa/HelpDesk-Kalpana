@@ -1,0 +1,171 @@
+<div class="admin-layout">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">H</div>
+      <span>HelpDesk</span>
+    </div>
+
+    <div class="sidebar-label">ADMINISTRATION</div>
+
+    <nav class="sidebar-nav">
+      <a routerLink="/admin-dashboard" class="nav-item">
+        <span>▦</span>
+        Dashboard
+      </a>
+
+      <a routerLink="/manager/tickets" class="nav-item">
+        <span>▤</span>
+        All Tickets
+      </a>
+
+      <a routerLink="/admin/users" class="nav-item active">
+        <span>♙</span>
+        User Management
+      </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="admin-profile">
+        <div class="avatar">A</div>
+        <div>
+          <strong>Administrator</strong>
+          <small>Admin Account</small>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+
+    <header class="topbar">
+      <div>
+        <h2>Create User</h2>
+        <p>Add a new Manager or Agent to HelpDesk.</p>
+      </div>
+
+      <a routerLink="/admin/users" class="back-btn">
+        Back to Users
+      </a>
+    </header>
+
+    <section class="page-content">
+
+      <div class="page-heading">
+        <h1>Add New User</h1>
+        <p>Enter the details below to create a new account.</p>
+      </div>
+
+      <div class="form-card">
+
+        <div class="form-icon">♙</div>
+
+        <h2>User Information</h2>
+        <p class="form-description">
+          Create an account for a Manager or support Agent.
+        </p>
+
+        <div *ngIf="successMessage" class="success-message">
+          {{ successMessage }}
+          <a routerLink="/admin/users">View all users</a>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+
+        <form [formGroup]="userForm" (ngSubmit)="createUser()">
+
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+
+            <input
+              id="fullName"
+              type="text"
+              formControlName="fullName"
+              placeholder="Enter full name"
+            />
+
+            <small
+              class="validation-error"
+              *ngIf="userForm.get('fullName')?.touched && userForm.get('fullName')?.invalid"
+            >
+              Name is required and must contain at least 3 characters.
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="Enter email address"
+            />
+
+            <small
+              class="validation-error"
+              *ngIf="userForm.get('email')?.touched && userForm.get('email')?.invalid"
+            >
+              Enter a valid email address.
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+
+            <div class="password-wrapper">
+              <input
+                id="password"
+                [type]="showPassword ? 'text' : 'password'"
+                formControlName="password"
+                placeholder="Enter password"
+              />
+
+              <button
+                type="button"
+                class="password-toggle"
+                (click)="showPassword = !showPassword"
+              >
+                {{ showPassword ? 'Hide' : 'Show' }}
+              </button>
+            </div>
+
+            <small
+              class="validation-error"
+              *ngIf="userForm.get('password')?.touched && userForm.get('password')?.invalid"
+            >
+              Password must contain at least 8 characters.
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="role">Select Role</label>
+
+            <select id="role" formControlName="role">
+              <option value="Agent">Agent</option>
+              <option value="Manager">Manager</option>
+            </select>
+          </div>
+
+          <div class="info-box">
+            <strong>Note:</strong>
+            Customers can register through the public registration page.
+            This form is only for creating Managers and Agents.
+          </div>
+
+          <button
+            type="submit"
+            class="submit-btn"
+            [disabled]="isLoading"
+          >
+            {{ isLoading ? 'Creating User...' : 'Create User' }}
+          </button>
+
+        </form>
+      </div>
+
+    </section>
+  </main>
+</div>

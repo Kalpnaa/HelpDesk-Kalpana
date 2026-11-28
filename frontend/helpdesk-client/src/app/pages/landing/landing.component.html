@@ -1,0 +1,221 @@
+
+<div class="landing-page">
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <a routerLink="/" class="brand">
+      <span class="brand-icon">H</span>
+      <span>Help<span class="brand-highlight">Desk</span></span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#benefits">Benefits</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a routerLink="/login" class="login-link">Login</a>
+      <a routerLink="/register" class="signup-button">Get Started</a>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <main>
+
+    <section class="hero" id="home">
+
+      <!-- LEFT: SUPPORT ILLUSTRATION -->
+      <div class="hero-visual">
+
+        <div class="visual-decoration decoration-one"></div>
+        <div class="visual-decoration decoration-two"></div>
+
+        <div class="illustration-card">
+
+          <div class="illustration-header">
+            <div class="illustration-logo">H</div>
+            <div>
+              <strong>HelpDesk Support</strong>
+              <span>Your support workspace</span>
+            </div>
+            <span class="online-dot"></span>
+          </div>
+
+          <div class="illustration-content">
+
+            <div class="welcome-message">
+              <span>WELCOME BACK!</span>
+              <h3>How can we help you today?</h3>
+              <p>We're here to make support simple.</p>
+            </div>
+
+            <div class="support-options">
+              <div class="support-option">
+                <span class="option-icon">🎫</span>
+                <div>
+                  <strong>Create a ticket</strong>
+                  <small>Tell us what you need</small>
+                </div>
+                <span class="option-arrow">→</span>
+              </div>
+
+              <div class="support-option">
+                <span class="option-icon">📋</span>
+                <div>
+                  <strong>Track your request</strong>
+                  <small>Check your ticket status</small>
+                </div>
+                <span class="option-arrow">→</span>
+              </div>
+
+              <div class="support-option">
+                <span class="option-icon">💬</span>
+                <div>
+                  <strong>Get support</strong>
+                  <small>Stay connected with our team</small>
+                </div>
+                <span class="option-arrow">→</span>
+              </div>
+            </div>
+
+            <div class="illustration-footer">
+              <span class="online-dot"></span>
+              Support made simple, all in one place.
+            </div>
+
+          </div>
+        </div>
+
+        <div class="floating-card floating-top">
+          <span>✓</span>
+          Ticket resolved!
+        </div>
+
+        <div class="floating-card floating-bottom">
+          <span class="floating-number">24/7</span>
+          <small>Organized support</small>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: HERO CONTENT -->
+      <div class="hero-content" id="about">
+
+        <span class="eyebrow">
+          YOUR SUPPORT, SIMPLIFIED
+        </span>
+
+        <h1>
+          Support that works.
+          <span>Solutions that matter.</span>
+        </h1>
+
+        <p class="hero-description">
+          Welcome to HelpDesk, a centralized platform designed
+          to make support requests easier to manage, track and resolve.
+
+          Whether you need help or provide support, everything
+          you need is organized in one place.
+        </p>
+
+        <div class="hero-actions">
+          <a routerLink="/register" class="primary-button">
+            Get Started
+            <span>→</span>
+          </a>
+
+          <a routerLink="/login" class="secondary-button">
+            Login to your account
+          </a>
+        </div>
+
+        <div class="hero-points">
+          <span>✓ Easy ticket management</span>
+          <span>✓ Clear progress tracking</span>
+          <span>✓ Organized communication</span>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- INTRODUCTION -->
+    <section class="intro-section">
+      <span class="section-label">ONE PLATFORM, BETTER SUPPORT</span>
+
+      <h2>Everything your support workflow needs</h2>
+
+      <p>
+        From raising a request to getting it resolved,
+        HelpDesk keeps the entire support process organized
+        and easy to follow.
+      </p>
+    </section>
+
+    <!-- BENEFITS -->
+    <section class="benefits-section" id="benefits">
+
+      <div class="benefit-grid">
+
+        <article class="benefit-card" *ngFor="let benefit of benefits">
+
+          <div class="benefit-icon">
+            {{ benefit.icon }}
+          </div>
+
+          <h3>{{ benefit.title }}</h3>
+
+          <p>{{ benefit.description }}</p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- CALL TO ACTION -->
+    <section class="cta-section">
+
+      <div>
+        <span class="section-label">READY TO GET STARTED?</span>
+
+        <h2>Make support simpler with HelpDesk.</h2>
+
+        <p>
+          Join HelpDesk and experience a more organized
+          way to manage support requests.
+        </p>
+      </div>
+
+      <div class="cta-actions">
+        <a routerLink="/register" class="cta-primary">
+          Create an Account
+        </a>
+
+        <a routerLink="/login" class="cta-secondary">
+          Login
+        </a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+
+    <a routerLink="/" class="brand footer-brand">
+      <span class="brand-icon">H</span>
+      <span>Help<span class="brand-highlight">Desk</span></span>
+    </a>
+
+    <p>Making support simpler, one ticket at a time.</p>
+
+    <span class="copyright">
+      © 2026 HelpDesk. All rights reserved.
+    </span>
+
+  </footer>
+
+</div>
