@@ -8,11 +8,16 @@ import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.compone
 import { CreateTicketComponent } from './pages/tickets/create-ticket/create-ticket.component';
 import { MyTicketsComponent } from './pages/tickets/my-tickets/my-tickets.component';
 import { AssignedTicketsComponent } from './pages/tickets/assigned-tickets/assigned-tickets.component';
-import { ManagerDashboardComponent } from './pages/tickets/manager-dashboard/manager-dashboard.component';
 import { LandingComponent } from './pages/landing/landing.component';
 import { CustomerDashboardComponent } from './pages/customer/customer-dashboard/customer-dashboard.component';
 import { AgentDashboardComponent } from './pages/agent/agent-dashboard/agent-dashboard.component';
+import {
+  ManagerDashboardComponent as ManagerTicketsComponent
+} from './pages/tickets/manager-dashboard/manager-dashboard.component';
 
+import {
+  ManagerDashboardComponent
+} from './pages/manager/manager-dashboard/manager-dashboard.component';
 
 export const routes: Routes = [
   {
@@ -60,12 +65,12 @@ export const routes: Routes = [
 },
 {
   path: 'manager-dashboard',
-  component: DashboardComponent,
+  component: ManagerDashboardComponent,
   canActivate: [authGuard, roleGuard(['Manager'])]
 },
 {
   path: 'manager/tickets',
-  component: ManagerDashboardComponent,
+  component: ManagerTicketsComponent,
   canActivate: [authGuard, roleGuard(['Manager', 'Admin'])]
 },
 {
