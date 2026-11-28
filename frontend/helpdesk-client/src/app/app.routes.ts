@@ -11,6 +11,9 @@ import { AssignedTicketsComponent } from './pages/tickets/assigned-tickets/assig
 import { ManagerDashboardComponent } from './pages/tickets/manager-dashboard/manager-dashboard.component';
 import { LandingComponent } from './pages/landing/landing.component';
 import { CustomerDashboardComponent } from './pages/customer/customer-dashboard/customer-dashboard.component';
+import { AgentDashboardComponent } from './pages/agent/agent-dashboard/agent-dashboard.component';
+
+
 export const routes: Routes = [
   {
     path: 'register',
@@ -47,7 +50,7 @@ export const routes: Routes = [
 },
 {
   path: 'agent-dashboard',
-  component: DashboardComponent,
+  component: AgentDashboardComponent,
   canActivate: [authGuard, roleGuard(['Agent'])]
 },
 {
