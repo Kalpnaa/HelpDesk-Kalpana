@@ -9,7 +9,7 @@ import { CreateTicketComponent } from './pages/tickets/create-ticket/create-tick
 import { MyTicketsComponent } from './pages/tickets/my-tickets/my-tickets.component';
 import { AssignedTicketsComponent } from './pages/tickets/assigned-tickets/assigned-tickets.component';
 import { ManagerDashboardComponent } from './pages/tickets/manager-dashboard/manager-dashboard.component';
-
+import { LandingComponent } from './pages/landing/landing.component';
 
 export const routes: Routes = [
   {
@@ -26,10 +26,9 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
-  },
+  path: '',
+  component: LandingComponent
+},
  
   {
   path: 'customer-dashboard',
@@ -78,6 +77,6 @@ export const routes: Routes = [
 
  {
     path: '**',
-    redirectTo: 'login',
+    redirectTo: '',
   },
 ];
