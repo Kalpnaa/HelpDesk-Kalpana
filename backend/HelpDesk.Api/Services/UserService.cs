@@ -12,7 +12,7 @@ public class UserService : IUserService
     private readonly ApplicationDbContext _context;
     private readonly IPasswordHasher<User> _passwordHasher;
 
-    public UserService(ApplicationDbContext context,IPasswordHasher<User> passwordHasher)
+    public UserService(ApplicationDbContext context, IPasswordHasher<User> passwordHasher)
     {
         _context = context;
         _passwordHasher = passwordHasher;
@@ -50,5 +50,18 @@ public class UserService : IUserService
             Email = user.Email,
             Role = user.Role
         };
+    }
+
+    public async Task<List<AgentResponseDto>> GetAgentsAsync()
+    {
+        return await _context.Users
+            .Where(u => u.Role == "Agent")
+            .Select(u => new AgentResponseDto
+            {
+                Id = u.Id,
+                FullName = u.FullName,
+                Email = u.Email
+            })
+            .ToListAsync();
     }
 }

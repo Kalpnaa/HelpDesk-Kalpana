@@ -8,7 +8,7 @@ namespace HelpDesk.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = UserRoles.Admin)]
+[Authorize]
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
@@ -19,6 +19,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> CreateUser(CreateUserDto dto)
     {
         var user = await _userService.CreateUserAsync(dto);
@@ -32,5 +33,14 @@ public class UserController : ControllerBase
         }
 
         return Created("", user);
+    }
+
+    [HttpGet("agents")]
+    [Authorize(Roles = "Manager,Admin")]
+    public async Task<IActionResult> GetAgents()
+    {
+        var agents = await _userService.GetAgentsAsync();
+
+        return Ok(agents);
     }
 }

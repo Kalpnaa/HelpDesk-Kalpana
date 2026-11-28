@@ -1,0 +1,60 @@
+
+<div class="tickets-container">
+
+  <div class="page-header">
+    <h2>My Tickets</h2>
+    <p>View and track all the support tickets you have submitted.</p>
+  </div>
+
+  <div *ngIf="loading" class="message">
+    Loading your tickets...
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!loading && !errorMessage && tickets.length === 0"
+       class="empty-message">
+    You haven't submitted any tickets yet.
+  </div>
+
+  <div class="table-wrapper"
+       *ngIf="!loading && tickets.length > 0">
+
+    <table>
+      <thead>
+        <tr>
+          <th>Ticket No.</th>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Priority</th>
+          <th>Status</th>
+          <th>Created Date</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let ticket of tickets">
+          <td>{{ ticket.ticketNumber }}</td>
+          <td>{{ ticket.title }}</td>
+          <td>{{ ticket.categoryName }}</td>
+          <td>
+            <span class="priority"
+                  [ngClass]="ticket.priority.toLowerCase()">
+              {{ ticket.priority }}
+            </span>
+          </td>
+          <td>
+            <span class="status"
+                  [ngClass]="ticket.status.toLowerCase()">
+              {{ ticket.status }}
+            </span>
+          </td>
+          <td>{{ ticket.createdAt | date:'mediumDate' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>

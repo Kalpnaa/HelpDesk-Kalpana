@@ -1,3 +1,4 @@
+
 # HelpDesk 
 
 ## 1. Technology Stack
@@ -25,7 +26,7 @@ HelpDesk is a web-based IT support ticket management system that allows customer
 
 ### Create an ASP.NET Core Web API project
 
-```bash
+```
 dotnet new webapi -n HelpDesk.Api
 ```
 
@@ -33,7 +34,7 @@ This creates a new ASP.NET Core Web API project named `HelpDesk.Api`.
 
 ### Restore dependencies
 
-```bash
+```
 dotnet restore
 ```
 
@@ -41,7 +42,7 @@ This restores the required NuGet packages for the project.
 
 ### Run the backend
 
-```bash
+```
 dotnet run
 ```
 
@@ -49,7 +50,7 @@ This runs the Web API application.
 
 ### Create a solution file
 
-```bash
+```
 dotnet new sln -n HelpDesk
 ```
 
@@ -59,7 +60,7 @@ A solution groups multiple related .NET projects together.
 
 ### Add the existing project to the solution
 
-```bash
+```
 dotnet sln add HelpDesk.Api/HelpDesk.Api.csproj
 ```
 
@@ -82,7 +83,7 @@ Entity Framework Core (EF Core) is an Object-Relational Mapper (ORM). It allows 
 
 ### Install the SQL Server provider
 
-```bash
+```
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 10.0.15
 ```
 
@@ -90,7 +91,7 @@ This package allows EF Core to connect to Microsoft SQL Server.
 
 ### Install the EF Core Design package
 
-```bash
+```
 dotnet add package Microsoft.EntityFrameworkCore.Design --version 10.0.15
 ```
 
@@ -104,7 +105,7 @@ The connection string contains the information required by the backend to connec
 
 ### Example connection string
 
-```json
+```
 {
   "ConnectionStrings": {
     "DefaultConnection": "Server=YOUR_SERVER_NAME;Database=HelpDeskDB;Trusted_Connection=True;TrustServerCertificate=True;"
@@ -131,7 +132,7 @@ ApplicationDbContext is the main class used by Entity Framework Core to interact
 
 **Example:**
 
-```csharp
+```
 using Microsoft.EntityFrameworkCore;
 
 namespace HelpDesk.Api.Data
@@ -151,7 +152,7 @@ namespace HelpDesk.Api.Data
 
 We register `ApplicationDbContext` in the dependency injection container so that different parts of our application can use it.
 
-```csharp
+```
 using HelpDesk.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -165,7 +166,7 @@ This tells the application to use SQL Server as the database provider and retrie
 
 ### 3. Install EF Core command-line tools
 
-```bash
+```
 dotnet tool install --global dotnet-ef --version 10.0.15
 ```
 
@@ -173,7 +174,7 @@ This installs the Entity Framework Core CLI tool, which is used to manage databa
 
 ### 4. Create the first migration
 
-```bash
+```
 dotnet ef migrations add InitialCreate --project HelpDesk.Api
 ```
 
@@ -183,7 +184,7 @@ A migration records changes made to the database structure.
 
 ### 5. Apply the migration to the database
 
-```bash
+```
 dotnet ef database update --project HelpDesk.Api
 ```
 
@@ -195,7 +196,7 @@ Whenever we make changes to our models or database structure, we can create a ne
 
 ### Create an Angular project
 
-```bash
+```
 ng new helpdesk-client --routing --style=scss
 ```
 
@@ -206,7 +207,7 @@ This creates a new Angular application named `helpdesk-client`.
 
 ### Run the frontend
 
-```bash
+```
 ng serve
 ```
 
@@ -218,7 +219,7 @@ To communicate with the backend APIs, we create an Angular service.
 
 ### Generate an API service
 
-```bash
+```
 ng generate service services/api
 ```
 
@@ -250,19 +251,19 @@ For a feature that requires database changes, we generally follow this sequence:
 
 **Create a migration:**
 
-```bash
+```
 dotnet ef migrations add MigrationName --project HelpDesk.Api
 ```
 
 **Apply migrations to the database:**
 
-```bash
+```
 dotnet ef database update --project HelpDesk.Api
 ```
 
 For example, the authentication migration was created using:
 
-```bash
+```
 dotnet ef migrations add InitialAuthentication --project HelpDesk.Api
 ```
 
@@ -274,7 +275,7 @@ Authentication allows users to register and log in to the HelpDesk application.
 
 ## 6.1 Registration API
 
-### Create the User entity
+### Create the User Entity
 
 - Created the User entity/model.
 - Added Users to ApplicationDbContext.
@@ -284,13 +285,13 @@ Authentication allows users to register and log in to the HelpDesk application.
 - Applied the migration to SQL Server.
 - Verified that the Users table was created successfully in SQL Server Management Studio (SSMS).
 
-### Create registration DTOs
+### Create Registration DTOs
 
 Created the required DTOs to define the data accepted by the registration API.
 
-### Backend implementation flow
+### Backend Implementation Flow
 
-**Models → DTOs → Interfaces → Services → Program.cs (service registration) → Controllers**
+**Models → DTOs → Interfaces → Services → Program.cs (Service Registration) → Controllers**
 
 Each layer has a responsibility:
 
@@ -315,7 +316,7 @@ JWT (JSON Web Token) is used to represent an authenticated user's identity when 
 
 Followed this frontend implementation flow:
 
-**Model (TypeScript interface) → App Services → Component → app.routes.ts → App Component**
+**Model (TypeScript Interface) → App Services → Component → app.routes.ts → App Component**
 
 - Created TypeScript interfaces for the authentication data.
 - Created Angular services to communicate with the authentication APIs.
@@ -323,9 +324,9 @@ Followed this frontend implementation flow:
 - Added routes in `app.routes.ts`.
 - Integrated the components into the application.
 
-### Generate an authentication guard
+### Generate an Authentication Guard
 
-```bash
+```
 ng generate guard guards/auth --functional
 ```
 
@@ -339,12 +340,12 @@ Authorization determines what an authenticated user is allowed to access or do i
 
 ## 7.1 Role-Based Permissions
 
-| Role | Permissions |
-|---|---|
-| Customer | Create tickets and view their own tickets. |
-| Agent | View assigned tickets and update assigned tickets. |
-| Manager | View all tickets, assign tickets, and manage the workflow. |
-| Admin | Full system access, including user and role management. |
+| Role     | Permissions                                                |
+| -------- | ---------------------------------------------------------- |
+| Customer | Create tickets and view their own tickets.                 |
+| Agent    | View assigned tickets and update assigned tickets.         |
+| Manager  | View all tickets, assign tickets, and manage the workflow. |
+| Admin    | Full system access, including user and role management.    |
 
 ## 7.2 Define User Roles
 
@@ -358,7 +359,7 @@ Used the role constants in controllers to protect API routes and restrict access
 
 Used .NET User Secrets to store the initial administrator's details outside the source code.
 
-```bash
+```
 dotnet user-secrets set "InitialAdmin:FullName" "HelpDesk Admin"
 
 dotnet user-secrets set "InitialAdmin:Email" "admin@helpdesk.local"
@@ -394,9 +395,9 @@ Tested the authorization APIs using Postman to verify that access is controlled 
 
 Implemented global error handling to manage exceptions centrally.
 
-### Swagger package installation
+### Swagger Package Installation
 
-```bash
+```
 dotnet add package Swashbuckle.AspNetCore --version 10.0.0
 ```
 
@@ -413,8 +414,152 @@ For ticket management, follow this sequence:
 3. Update ApplicationDbContext.
 4. Create and apply database migrations to SQL Server.
 
-### General implementation flow
+### General Implementation Flow
 
 **DTOs → Interfaces → Services → Controllers**
 
 Continue with the remaining required implementation and testing steps.
+
+---
+
+# 10. Module 4 – Ticket Management UI
+
+## 10.1 Objective
+
+Develop the Angular frontend for ticket management and integrate it with the existing ASP.NET Core Web APIs.
+
+The application provides different dashboards and functionalities based on the logged-in user's role.
+
+## 10.2 Frontend Implementation Flow
+
+Follow this sequence:
+
+**Ticket Model → Angular Services → Components → Routing → API Integration → UI Testing**
+
+### Step 1 – Create Ticket Model
+
+Create TypeScript interfaces to represent ticket data transferred between Angular and the backend.
+
+File: `models/ticket.model.ts`
+
+### Step 2 – Create Ticket Service
+
+Create an Angular service to communicate with the ticket-management APIs.
+
+The service handles HTTP requests such as:
+
+- Creating tickets.
+- Fetching customer tickets.
+- Fetching assigned agent tickets.
+- Fetching all tickets.
+- Assigning tickets to agents.
+- Updating ticket status.
+
+### Step 3 – Create Role-Based UI Components
+
+Create separate dashboards based on the user's role.
+
+#### 1. Customer Dashboard
+
+Functionalities:
+
+- Create new tickets using a form.
+- View tickets created by the logged-in customer.
+- View ticket details.
+- View ticket status and priority.
+
+#### 2. Agent Dashboard
+
+Functionalities:
+
+- View tickets assigned to the logged-in agent.
+- View ticket details.
+- Update the status of assigned tickets.
+
+#### 3. Manager Dashboard
+
+Functionalities:
+
+- View all tickets.
+- Assign tickets to agents.
+- Monitor ticket status and priority.
+- Manage ticket assignments.
+
+#### 4. Admin Access
+
+Admin can access the overall ticket-management functionality.
+
+Existing manager-level ticket APIs can be reused where appropriate, with Admin included in the backend authorization rules.
+
+## 10.3 Backend APIs Required
+
+Before frontend integration, verify that the required APIs are implemented and tested.
+
+| Functionality                 | Authorized Role |
+| ----------------------------- | --------------- |
+| Create ticket                 | Customer        |
+| View own tickets              | Customer        |
+| View assigned tickets         | Agent           |
+| Update assigned ticket status | Agent           |
+| View all tickets              | Manager, Admin  |
+| Assign tickets to agents      | Manager, Admin  |
+
+**Note:** Reuse the existing APIs wherever possible instead of creating duplicate endpoints.
+
+## 10.4 Application Flow
+
+### Customer Ticket Creation Flow
+
+**Customer → Angular Form → ASP.NET Core API → SQL Server → Success Response**
+
+### Overall Application Flow
+
+1. User logs in.
+2. Backend authenticates the user and generates a JWT.
+3. Angular identifies the user's role.
+4. The user is redirected to the appropriate dashboard.
+5. Angular services send HTTP requests to the backend APIs.
+6. The backend validates the request and performs the required operations.
+7. SQL Server stores or retrieves the ticket information.
+8. The backend returns the response to Angular.
+9. Angular updates the UI accordingly.
+
+## 10.5 Testing
+
+Test all role-based functionalities:
+
+- Test ticket creation using the Customer account.
+- Verify that customers can only view their own tickets.
+- Verify that agents can only view their assigned tickets.
+- Test ticket status updates by agents.
+- Test ticket assignment by the Manager.
+- Verify Admin access.
+- Test unauthorized access and expired JWT tokens.
+
+## 10.6 Git Workflow
+
+After completing the module:
+
+1. Test all frontend functionalities.
+2. Verify backend integration.
+3. Commit the changes.
+4. Push the feature branch.
+5. Create a Pull Request.
+6. Merge after reviewing the implementation.
+
+---
+
+# 11. Overall Project Workflow
+
+The overall HelpDesk application follows this workflow:
+
+1. **Authentication:** Users register and log in.
+2. **Authorization:** Access is controlled based on user roles.
+3. **Ticket Creation:** Customers create support tickets.
+4. **Ticket Assignment:** Managers assign tickets to agents.
+5. **Ticket Management:** Agents view and update their assigned tickets.
+6. **Ticket Monitoring:** Managers and Admins monitor tickets across the system.
+
+The frontend and backend communicate through REST APIs, while SQL Server stores the application data.
+
+Complete the ticket-management backend section
