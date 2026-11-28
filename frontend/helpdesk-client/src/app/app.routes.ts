@@ -10,7 +10,7 @@ import { MyTicketsComponent } from './pages/tickets/my-tickets/my-tickets.compon
 import { AssignedTicketsComponent } from './pages/tickets/assigned-tickets/assigned-tickets.component';
 import { ManagerDashboardComponent } from './pages/tickets/manager-dashboard/manager-dashboard.component';
 import { LandingComponent } from './pages/landing/landing.component';
-
+import { CustomerDashboardComponent } from './pages/customer/customer-dashboard/customer-dashboard.component';
 export const routes: Routes = [
   {
     path: 'register',
@@ -32,7 +32,7 @@ export const routes: Routes = [
  
   {
   path: 'customer-dashboard',
-  component: DashboardComponent,
+  component: CustomerDashboardComponent,
   canActivate: [authGuard, roleGuard(['Customer'])]
 },
 {
