@@ -1,0 +1,184 @@
+<div class="admin-layout">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">H</div>
+      <span>HelpDesk</span>
+    </div>
+
+    <div class="sidebar-label">ADMINISTRATION</div>
+
+    <nav class="sidebar-nav">
+      <a routerLink="/admin-dashboard" class="nav-item">
+        <span>▦</span>
+        Dashboard
+      </a>
+
+      <a routerLink="/manager/tickets" class="nav-item">
+        <span>▤</span>
+        All Tickets
+      </a>
+
+      <a routerLink="/admin/users" class="nav-item active">
+        <span>♙</span>
+        User Management
+      </a>
+      <a routerLink="/admin/create-user" class="nav-item">
+  <span>＋</span>
+  Create User
+</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="admin-profile">
+        <div class="avatar">A</div>
+        <div>
+          <strong>Administrator</strong>
+          <small>Admin Account</small>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+
+    <header class="topbar">
+      <div>
+        <h2>User Management</h2>
+        <p>View and manage all registered HelpDesk users.</p>
+      </div>
+
+      <button class="logout-btn" (click)="logout()">
+        Logout
+      </button>
+    </header>
+
+    <section class="page-content">
+
+      <div class="welcome-section">
+        <div>
+          <h1>Users Directory</h1>
+          <p>Overview of Managers, Agents and Customers.</p>
+        </div>
+
+        <button class="refresh-btn" (click)="loadUsers()">
+          ↻ Refresh
+        </button>
+      </div>
+
+      <section class="stats-grid">
+
+        <div class="stat-card total">
+          <div class="stat-icon">♙</div>
+          <div>
+            <p>Total Users</p>
+            <h2>{{ users.length }}</h2>
+          </div>
+        </div>
+
+        <div class="stat-card manager">
+          <div class="stat-icon">♔</div>
+          <div>
+            <p>Managers</p>
+            <h2>{{ managers }}</h2>
+          </div>
+        </div>
+
+        <div class="stat-card agent">
+          <div class="stat-icon">♧</div>
+          <div>
+            <p>Agents</p>
+            <h2>{{ agents }}</h2>
+          </div>
+        </div>
+
+        <div class="stat-card customer">
+          <div class="stat-icon">♙</div>
+          <div>
+            <p>Customers</p>
+            <h2>{{ customers }}</h2>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="users-section">
+
+        <div class="section-heading">
+          <div>
+            <h2>All Users</h2>
+            <p>{{ filteredUsers.length }} users found</p>
+          </div>
+
+          <input
+            type="text"
+            placeholder="Search by name, email or role..."
+            [value]="searchTerm"
+            (input)="searchTerm = $any($event.target).value"
+            class="search-input"
+          />
+        </div>
+
+        <div *ngIf="isLoading" class="message">
+          Loading users...
+        </div>
+
+        <div *ngIf="!isLoading && errorMessage" class="error-message">
+          {{ errorMessage }}
+          <button (click)="loadUsers()">Try Again</button>
+        </div>
+
+        <div
+          *ngIf="!isLoading && !errorMessage && filteredUsers.length === 0"
+          class="message"
+        >
+          No users found.
+        </div>
+
+        <div
+          class="table-wrapper"
+          *ngIf="!isLoading && !errorMessage && filteredUsers.length > 0"
+        >
+          <table>
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Email Address</th>
+                <th>Role</th>
+                <th>Registered On</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let user of filteredUsers">
+                <td>
+                  <div class="user-cell">
+                    <div class="user-avatar">
+                      {{ user.fullName.charAt(0).toUpperCase() }}
+                    </div>
+                    <strong>{{ user.fullName }}</strong>
+                  </div>
+                </td>
+
+                <td>{{ user.email }}</td>
+
+                <td>
+                  <span
+                    class="role-badge"
+                    [ngClass]="user.role.toLowerCase()"
+                  >
+                    {{ user.role }}
+                  </span>
+                </td>
+
+                <td>{{ user.createdAt | date:'dd MMM yyyy' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </section>
+
+    </section>
+  </main>
+</div>

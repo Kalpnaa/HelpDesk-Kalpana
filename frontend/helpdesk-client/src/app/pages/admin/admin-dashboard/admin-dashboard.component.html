@@ -1,1 +1,277 @@
-<p>admin-dashboard works!</p>
+<div class="dashboard-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">H</div>
+      <span>HelpDesk</span>
+    </div>
+
+    <div class="sidebar-section">
+      <p class="sidebar-heading">ADMINISTRATION</p>
+
+      <a
+        routerLink="/admin-dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="sidebar-link"
+      >
+        <span class="nav-icon">▦</span>
+        Dashboard
+      </a>
+      <a routerLink="/admin/users" class="nav-item" class="sidebar-link">
+        <span>♙</span>
+        User Management
+      </a>
+      <a routerLink="/admin/create-user" class="nav-item" class="sidebar-link">
+        <span>＋</span>
+        Create User
+      </a>
+      <a
+        routerLink="/manager/tickets"
+        routerLinkActive="active"
+        class="sidebar-link"
+      >
+        <span class="nav-icon">▤</span>
+        All Tickets
+      </a>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="sidebar-help">
+        <div class="help-icon">?</div>
+        <div>
+          <strong>Need help?</strong>
+          <p>Manage your support system.</p>
+        </div>
+      </div>
+
+      <button class="logout-button" (click)="logout()">
+        <span>↪</span>
+        Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Topbar -->
+    <header class="topbar">
+      <div>
+        <p class="breadcrumb">Administration / Dashboard</p>
+        <h2>Admin Dashboard</h2>
+      </div>
+
+      <div class="user-profile">
+        <div class="user-avatar">
+          {{ currentUser?.fullName?.charAt(0)?.toUpperCase() || "A" }}
+        </div>
+
+        <div class="user-details">
+          <strong>{{ currentUser?.fullName || "Administrator" }}</strong>
+          <span>Administrator</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="dashboard-content">
+      <!-- Welcome -->
+      <div class="welcome-section">
+        <div>
+          <p class="welcome-label">SYSTEM OVERVIEW</p>
+          <h1>Welcome back, {{ currentUser?.fullName || "Admin" }}!</h1>
+          <p>Monitor your organization's support activity from here.</p>
+        </div>
+
+        <button class="refresh-button" (click)="loadDashboard()">
+          ↻ Refresh
+        </button>
+      </div>
+
+      <!-- Loading -->
+      <div class="message-card" *ngIf="loading">
+        Loading dashboard information...
+      </div>
+
+      <!-- Error -->
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+        <button (click)="loadDashboard()">Try again</button>
+      </div>
+
+      <ng-container *ngIf="!loading && !errorMessage">
+        <!-- Ticket Overview -->
+        <div class="section-heading">
+          <h2>Ticket Overview</h2>
+          <span>Organization-wide statistics</span>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon purple">▤</div>
+            <p>Total Tickets</p>
+            <h2>{{ totalTickets }}</h2>
+            <span>All support requests</span>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon orange">◷</div>
+            <p>Unassigned Tickets</p>
+            <h2>{{ unassignedTickets }}</h2>
+            <span>Waiting for assignment</span>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon blue">✓</div>
+            <p>Assigned Tickets</p>
+            <h2>{{ assignedTickets }}</h2>
+            <span>Assigned to agents</span>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon green">◉</div>
+            <p>Active Tickets</p>
+            <h2>{{ activeTickets }}</h2>
+            <span>New, Open or Pending</span>
+          </div>
+        </div>
+
+        <!-- Organization Overview -->
+        <div class="section-heading team-heading">
+          <h2>Organization Overview</h2>
+        </div>
+
+        <div class="secondary-stats">
+          <div class="secondary-card">
+            <div class="secondary-icon">♙</div>
+
+            <div>
+              <p>Support Agents</p>
+              <h2>{{ totalAgents }}</h2>
+              <span *ngIf="agentsError">{{ agentsError }}</span>
+              <span *ngIf="!agentsError">Registered agent accounts</span>
+            </div>
+          </div>
+
+          <div class="secondary-card">
+            <div class="secondary-icon">♧</div>
+
+            <div>
+              <p>Customers with Tickets</p>
+              <h2>{{ totalCustomers }}</h2>
+              <span>Unique customers who raised tickets</span>
+            </div>
+          </div>
+
+          <div class="secondary-card">
+            <div class="secondary-icon">✓</div>
+
+            <div>
+              <p>Resolved Tickets</p>
+              <h2>{{ resolvedTickets }}</h2>
+              <span>Resolved or Closed</span>
+            </div>
+          </div>
+
+          <div class="secondary-card">
+            <div class="secondary-icon critical-icon">!</div>
+
+            <div>
+              <p>Critical Priority</p>
+              <h2>{{ criticalTickets }}</h2>
+              <span>Tickets requiring urgent attention</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Tickets -->
+        <div class="section-heading recent-heading">
+          <div>
+            <h2>Recent Tickets</h2>
+            <p>Latest support requests across the organization.</p>
+          </div>
+
+          <a routerLink="/manager/tickets" class="view-all">
+            View All Tickets →
+          </a>
+        </div>
+
+        <div class="table-card">
+          <div class="table-wrapper" *ngIf="recentTickets.length > 0">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ticket</th>
+                  <th>Title</th>
+                  <th>Customer</th>
+                  <th>Assigned Agent</th>
+                  <th>Priority</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let ticket of recentTickets">
+                  <td class="ticket-number">
+                    {{ ticket.ticketNumber }}
+                  </td>
+
+                  <td class="ticket-title">
+                    {{ ticket.title }}
+                  </td>
+
+                  <td>{{ ticket.createdByName }}</td>
+
+                  <td>
+                    <span *ngIf="ticket.assignedToName">
+                      {{ ticket.assignedToName }}
+                    </span>
+
+                    <span *ngIf="!ticket.assignedToName" class="unassigned">
+                      Unassigned
+                    </span>
+                  </td>
+
+                  <td>
+                    <span
+                      class="priority-badge"
+                      [ngClass]="ticket.priority.toLowerCase()"
+                    >
+                      {{ ticket.priority }}
+                    </span>
+                  </td>
+
+                  <td>
+                    <span
+                      class="status-badge"
+                      [ngClass]="ticket.status.toLowerCase()"
+                    >
+                      {{ ticket.status }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="empty-state" *ngIf="recentTickets.length === 0">
+            <div class="empty-icon">▤</div>
+            <h3>No tickets yet</h3>
+            <p>Customer support requests will appear here.</p>
+          </div>
+        </div>
+
+        <!-- Quick Action -->
+        <div class="quick-action">
+          <div>
+            <h3>Manage Your Support System</h3>
+            <p>
+              Review all tickets, assign agents and monitor support progress.
+            </p>
+          </div>
+
+          <a routerLink="/manager/tickets"> Manage Tickets → </a>
+        </div>
+      </ng-container>
+    </section>
+  </main>
+</div>

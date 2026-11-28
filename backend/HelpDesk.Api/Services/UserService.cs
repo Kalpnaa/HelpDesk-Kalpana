@@ -64,4 +64,19 @@ public class UserService : IUserService
             })
             .ToListAsync();
     }
+    public async Task<List<UserResponseDto>> GetAllUsersAsync()
+{
+    return await _context.Users
+        .OrderBy(user => user.Role)
+        .ThenBy(user => user.FullName)
+        .Select(user => new UserResponseDto
+        {
+            Id = user.Id,
+            FullName = user.FullName,
+            Email = user.Email,
+            Role = user.Role,
+            CreatedAt = user.CreatedAt
+        })
+        .ToListAsync();
+}
 }

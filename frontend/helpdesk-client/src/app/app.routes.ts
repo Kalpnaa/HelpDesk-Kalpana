@@ -11,14 +11,11 @@ import { AssignedTicketsComponent } from './pages/tickets/assigned-tickets/assig
 import { LandingComponent } from './pages/landing/landing.component';
 import { CustomerDashboardComponent } from './pages/customer/customer-dashboard/customer-dashboard.component';
 import { AgentDashboardComponent } from './pages/agent/agent-dashboard/agent-dashboard.component';
-import {
-  ManagerDashboardComponent as ManagerTicketsComponent
-} from './pages/tickets/manager-dashboard/manager-dashboard.component';
-
-import {
-  ManagerDashboardComponent
-} from './pages/manager/manager-dashboard/manager-dashboard.component';
-
+import { ManagerDashboardComponent as ManagerTicketsComponent} from './pages/tickets/manager-dashboard/manager-dashboard.component';
+import {  ManagerDashboardComponent} from './pages/manager/manager-dashboard/manager-dashboard.component';
+import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard.component';
+import { AdminUsersComponent } from './pages/admin/admin-users/admin-users.component';
+import { CreateUserComponent } from './pages/admin/create-user/create-user.component';
 export const routes: Routes = [
   {
     path: 'register',
@@ -75,8 +72,20 @@ export const routes: Routes = [
 },
 {
   path: 'admin-dashboard',
-  component: DashboardComponent,
+  component: AdminDashboardComponent,
   canActivate: [authGuard, roleGuard(['Admin'])]
+},
+{
+  path: 'admin/users',
+  component: AdminUsersComponent,
+  canActivate: [authGuard, roleGuard],
+  data: { roles: ['Admin'] }
+},
+{
+  path: 'admin/create-user',
+  component: CreateUserComponent,
+  canActivate: [authGuard, roleGuard],
+  data: { roles: ['Admin'] }
 },
 {
   path: 'unauthorized',

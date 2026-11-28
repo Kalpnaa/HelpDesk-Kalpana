@@ -563,3 +563,9 @@ The overall HelpDesk application follows this workflow:
 The frontend and backend communicate through REST APIs, while SQL Server stores the application data.
 
 Complete the ticket-management backend section
+
+
+
+
+module 5 
+making angular ui integarting all pages an
