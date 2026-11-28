@@ -1,81 +1,153 @@
-<div class="register-container">
-  <div class="register-card">
 
-    <h2>Create Your Account</h2>
-    <p class="subtitle">Join HelpDesk to get support</p>
-
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-
-      <div class="form-group">
-        <label for="fullName">Full Name</label>
-        <input
-          id="fullName"
-          type="text"
-          formControlName="fullName"
-          placeholder="Enter your full name"
-        />
-
-        <small *ngIf="registerForm.get('fullName')?.touched &&
-                      registerForm.get('fullName')?.hasError('required')">
-          Full name is required.
-        </small>
-        <small *ngIf="registerForm.get('fullName')?.touched &&
-                      registerForm.get('fullName')?.hasError('minlength')">
-          Name must contain at least 2 characters.
-        </small>
-      </div>
-
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input
-          id="email"
-          type="email"
-          formControlName="email"
-          placeholder="Enter your email"
-        />
-
-        <small *ngIf="registerForm.get('email')?.touched &&
-                      registerForm.get('email')?.hasError('required')">
-          Email is required.
-        </small>
-        <small *ngIf="registerForm.get('email')?.touched &&
-                      registerForm.get('email')?.hasError('email')">
-          Enter a valid email address.
-        </small>
-      </div>
-
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          formControlName="password"
-          placeholder="Create a password"
-        />
-
-        <small *ngIf="registerForm.get('password')?.touched &&
-                      registerForm.get('password')?.hasError('required')">
-          Password is required.
-        </small>
-        <small *ngIf="registerForm.get('password')?.touched &&
-                      registerForm.get('password')?.hasError('minlength')">
-          Password must contain at least 8 characters.
-        </small>
-      </div>
-
-      <button type="submit" [disabled]="isLoading">
-        {{ isLoading ? 'Creating Account...' : 'Sign Up' }}
-      </button>
-
-    </form>
-
-    <p class="success-message" *ngIf="successMessage">
-      {{ successMessage }}
-    </p>
-
-    <p class="error-message" *ngIf="errorMessage">
-      {{ errorMessage }}
-    </p>
-
+<div class="auth-page">
+  <div class="auth-brand">
+    <a routerLink="/" class="brand">
+      <span class="brand-icon">H</span>
+      <span>HelpDesk</span>
+    </a>
+    <span class="brand-caption">Support made simpler.</span>
   </div>
+
+  <main class="auth-container">
+    <section class="auth-visual">
+      <div class="visual-content">
+        <span class="visual-label">GET STARTED WITH HELPDESK</span>
+
+        <h1>Better support starts here.</h1>
+
+        <p>
+          Create your account and get a simpler way to raise,
+          manage and track your support requests.
+        </p>
+
+        <div class="visual-benefits">
+          <div class="benefit">
+            <span>✓</span>
+            <p>Raise support tickets easily</p>
+          </div>
+          <div class="benefit">
+            <span>✓</span>
+            <p>Track your ticket progress</p>
+          </div>
+          <div class="benefit">
+            <span>✓</span>
+            <p>Stay connected with your support team</p>
+          </div>
+        </div>
+      </div>
+      <div class="visual-decoration decoration-one"></div>
+      <div class="visual-decoration decoration-two"></div>
+    </section>
+
+    <section class="auth-form-section">
+      <div class="form-card">
+        <div class="mobile-brand">HelpDesk</div>
+
+        <span class="eyebrow">CREATE YOUR ACCOUNT</span>
+        <h2>Join HelpDesk</h2>
+        <p class="form-description">
+          Fill in your details to create your account.
+        </p>
+
+        <div class="error-message" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+
+        <div class="success-message" *ngIf="successMessage">
+          {{ successMessage }}
+        </div>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="fullName">Full name</label>
+            <input
+              id="fullName"
+              type="text"
+              formControlName="fullName"
+              placeholder="Enter your full name"
+              autocomplete="name"
+            />
+
+            <small *ngIf="registerForm.get('fullName')?.touched &&
+              registerForm.get('fullName')?.hasError('required')">
+              Full name is required.
+            </small>
+            <small *ngIf="registerForm.get('fullName')?.touched &&
+              registerForm.get('fullName')?.hasError('minlength')">
+              Name must contain at least 2 characters.
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+            />
+
+            <small *ngIf="registerForm.get('email')?.touched &&
+              registerForm.get('email')?.hasError('required')">
+              Email is required.
+            </small>
+            <small *ngIf="registerForm.get('email')?.touched &&
+              registerForm.get('email')?.hasError('email')">
+              Enter a valid email address.
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+
+            <div class="password-wrapper">
+              <input
+                id="password"
+                [type]="showPassword ? 'text' : 'password'"
+                formControlName="password"
+                placeholder="Create a password"
+                autocomplete="new-password"
+              />
+              <button
+                type="button"
+                class="password-toggle"
+                (click)="showPassword = !showPassword"
+              >
+                {{ showPassword ? 'Hide' : 'Show' }}
+              </button>
+            </div>
+
+            <small *ngIf="registerForm.get('password')?.touched &&
+              registerForm.get('password')?.hasError('required')">
+              Password is required.
+            </small>
+            <small *ngIf="registerForm.get('password')?.touched &&
+              registerForm.get('password')?.hasError('minlength')">
+              Password must contain at least 8 characters.
+            </small>
+            <span class="input-hint">Use at least 8 characters.</span>
+          </div>
+
+          <button
+            type="submit"
+            class="submit-button"
+            [disabled]="isLoading"
+          >
+            {{ isLoading ? 'Creating account...' : 'Create Account' }}
+            <span *ngIf="!isLoading">→</span>
+          </button>
+        </form>
+
+        <p class="switch-auth">
+          Already have an account?
+          <a routerLink="/login">Sign in</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="auth-footer">
+    © 2026 HelpDesk. All rights reserved.
+  </footer>
 </div>
